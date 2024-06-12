@@ -5,7 +5,7 @@ const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
 const box = 20;
-const canvasSize = Math.min(window.innerWidth, window.innerHeight) - 20;
+const canvasSize = Math.min(390, window.innerHeight - 40); // Учитываем отступы
 
 canvas.width = canvasSize;
 canvas.height = canvasSize;
@@ -48,10 +48,10 @@ function draw() {
     ctx.clearRect(0, 0, canvasSize, canvasSize);
 
     for (let i = 0; i < snake.length; i++) {
-        ctx.fillStyle = i == 0 ? "lime" : "lightgreen";
+        ctx.fillStyle = i == 0 ? "orange" : "goldenrod"; // Цвета змейки
         ctx.fillRect(snake[i].x, snake[i].y, box, box);
 
-        ctx.strokeStyle = "darkgreen";
+        ctx.strokeStyle = "darkorange"; // Обводка змейки
         ctx.strokeRect(snake[i].x, snake[i].y, box, box);
     }
 
@@ -102,5 +102,21 @@ function draw() {
 
 let game = setInterval(draw, 100);
 
+document.addEventListener('touchmove', function(event) {
+    event.preventDefault();
+}, { passive: false });
 
+document.addEventListener('gesturestart', function(event) {
+    event.preventDefault();
+    document.body.style.zoom = 1.0;
+}, { passive: false });
 
+document.addEventListener('gesturechange', function(event) {
+    event.preventDefault();
+    document.body.style.zoom = 1.0;
+}, { passive: false });
+
+document.addEventListener('gestureend', function(event) {
+    event.preventDefault();
+    document.body.style.zoom = 1.0;
+}, { passive: false });
