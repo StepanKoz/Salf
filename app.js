@@ -23,6 +23,45 @@ let d;
 
 document.addEventListener("keydown", direction);
 
+let touchStartX = 0;
+let touchStartY = 0;
+let touchEndX = 0;
+let touchEndY = 0;
+
+canvas.addEventListener('touchstart', handleTouchStart, false);
+canvas.addEventListener('touchend', handleTouchEnd, false);
+
+function handleTouchStart(event) {
+    const firstTouch = event.touches[0];
+    touchStartX = firstTouch.clientX;
+    touchStartY = firstTouch.clientY;
+}
+
+function handleTouchEnd(event) {
+    touchEndX = event.changedTouches[0].clientX;
+    touchEndY = event.changedTouches[0].clientY;
+    handleSwipe();
+}
+
+function handleSwipe() {
+    const diffX = touchEndX - touchStartX;
+    const diffY = touchEndY - touchStartY;
+
+    if (Math.abs(diffX) > Math.abs(diffY)) {
+        if (diffX > 0 && d != "LEFT") {
+            d = "RIGHT";
+        } else if (diffX < 0 && d != "RIGHT") {
+            d = "LEFT";
+        }
+    } else {
+        if (diffY > 0 && d != "UP") {
+            d = "DOWN";
+        } else if (diffY < 0 && d != "DOWN") {
+            d = "UP";
+        }
+    }
+}
+
 function direction(event) {
     if (event.keyCode == 37 && d != "RIGHT") {
         d = "LEFT";
